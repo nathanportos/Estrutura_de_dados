@@ -1,81 +1,42 @@
 #include <iostream>
-#include <queue>
-#include <string>
-#include <locale.h>
-
+#include <stack>
 using namespace std;
 
 int main() {
-
-    setlocale(LC_ALL, "Portuguese");
-
-    queue<string> fila;
-    int opcao;
-    string nome;
-
-    cout << "Bem-vindo ao sistema de atendimento da loja!\n";
+    stack<int> pilha;
+    int opcao, valor;
 
     do {
-        cout << "\nOpções disponíveis:\n";
-        cout << "1. Inserir cliente na fila\n";
-        cout << "2. Atender próximo cliente\n";
-        cout << "3. Exibir fila de espera\n";
-        cout << "4. Encerrar o programa\n";
-
-        cout << "\nDigite a opção desejada: ";
+        cout << "\n=== MENU ===\n"
+             << "1. Inserir (push)\n"
+             << "2. Remover (pop)\n"
+             << "3. Ver topo (top)\n"
+             << "4. Verificar se vazia\n"
+             << "5. Tamanho\n"
+             << "0. Sair\n"
+             << "Opcao: ";
         cin >> opcao;
 
-        cin.ignore();
-
-        switch(opcao) {
-
+        switch (opcao) {
             case 1:
-                cout << "Digite o nome do cliente: ";
-                getline(cin, nome);
-
-                fila.push(nome);
-
-                cout << "Cliente " << nome
-                     << " foi adicionado à fila de espera.\n";
+                cout << "Valor: "; cin >> valor;
+                pilha.push(valor);
+                cout << "Inserido: " << valor << "\n";
                 break;
-
             case 2:
-                if(!fila.empty()) {
-                    cout << "Atendendo cliente: "
-                         << fila.front() << endl;
-
-                    fila.pop();
-                } else {
-                    cout << "A fila está vazia!\n";
-                }
+                if (pilha.empty()) cout << "Pilha vazia!\n";
+                else { cout << "Removido: " << pilha.top() << "\n"; pilha.pop(); }
                 break;
-
             case 3:
-                if(!fila.empty()) {
-
-                    queue<string> filaTemp = fila;
-
-                    cout << "Fila de espera:\n";
-
-                    while(!filaTemp.empty()) {
-                        cout << "- " << filaTemp.front() << endl;
-                        filaTemp.pop();
-                    }
-
-                } else {
-                    cout << "A fila está vazia!\n";
-                }
+                if (pilha.empty()) cout << "Pilha vazia!\n";
+                else cout << "Topo: " << pilha.top() << "\n";
                 break;
-
             case 4:
-                cout << "Encerrando o programa...\n";
+                cout << (pilha.empty() ? "Vazia: sim" : "Vazia: nao") << "\n";
                 break;
-
-            default:
-                cout << "Opção inválida!\n";
+            case 5:
+                cout << "Tamanho: " << pilha.size() << "\n";
+                break;
         }
-
-    } while(opcao != 4);
-
-    return 0;
+    } while (opcao != 0);
 }
